@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# sourced from https://github.com/MarinHoc/dotfiles
+
+# set step
+step=20
+
+if bspc query -N -n focused.floating > /dev/null; then
+    case "$1" in
+        west) x="-$step"; y=0;;
+        east) x="$step"; y=0;;
+        north) x=0; y="-$step";;
+        south) x=0; y="$step";;
+    esac
+    bspc node -v "$x" "$y"
+else
+    bspc node -s "$1"
+fi
+
+# vim: ft=sh

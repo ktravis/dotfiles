@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#
+# sourced from https://github.com/MarinHoc/dotfiles
+
+# exit if there is a preselection
+bspc query -N -n .\!automatic > /dev/null && \
+    exit
+
+vert=south
+hori=east
+
+x=$(bspc query -T -n focused | jq '.rectangle.width')
+y=$(bspc query -T -n focused | jq '.rectangle.height')
+
+# split horizontally if x > y
+# split vertically otherwise
+[ "$x" -gt "$y" ] && \
+    split="$hori" || \
+    split="$vert"
+
+echo "split_dir=${split}"
+
+# vim: ft=sh

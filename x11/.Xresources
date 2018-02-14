@@ -1,0 +1,76 @@
+! URXVT
+
+! fonts
+URxvt.font: -uw-ttyp0-medium-r-*-*-*-160-*-*-*-*-*-*
+URxvt.boldFont: -uw-ttyp0-bold-r-*-*-*-160-*-*-*-*-*-*
+
+! settings
+URxvt.scrollBar: 0
+URxvt.cursorBlink: 1
+URxvt.internalBorder: 15
+URxvt.geometry: 70x30
+
+! extensions
+URxvt.perl-ext-common: default,matcher,selection-to-clipboard
+URxvt.url-launcher: chromium
+URxvt.matcher.rend.0: fg13
+URxvt.matcher.button: 3
+
+! FONTS
+
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.rgba: rgb
+Xft.lcdfilter: lcddefault
+
+! THEMING
+
+! colors
+*.foreground: #E8DFD6
+*.background: #080808
+*.cursorColor: #E8DFD6
+
+*.color0: #080808
+*.color8: #065F73
+
+*.color1: #C2454E
+*.color9: #EF5847
+
+*.color2: #7CBF9E
+*.color10: #A2D9B1
+
+*.color3: #8A7A63
+*.color11: #BEB090
+
+*.color4: #2E3340
+*.color12: #61778D
+
+*.color5: #FF5879
+*.color13: #FF99A1
+
+*.color6: #44B5B1
+*.color14: #9ED9D8
+
+*.color7: #E8DFD6
+*.color15: #E8DFD6
+
+! xcursor
+Xcursor.theme: DMZ-White
+
+! ROFI
+
+! settings
+!rofi.font: Cherry 8
+rofi.separator-style: none
+rofi.scrollbar-width: 0
+rofi.padding: 15
+rofi.width: 30
+rofi.lines: 5
+rofi.bw: 0
+
+! colors
+rofi.color-window: #EEEEEE, #EEEEEE, #EEEEEE
+rofi.color-normal: #EEEEEE, #021B21, #EEEEEE, #EEEEEE, #FF99A1
+rofi.color-active: #EEEEEE, #021B21, #EEEEEE, #EEEEEE, #FF99A1
+rofi.color-urgent: #EEEEEE, #065F73, #EEEEEE, #EEEEEE, #A2D9B1

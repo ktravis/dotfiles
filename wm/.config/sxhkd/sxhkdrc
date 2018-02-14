@@ -1,0 +1,60 @@
+# SHORTCUTS
+
+alt + {F5,F6}
+    xbacklight -{dec,inc} 10
+
+XF86Audio{MicMute,Mute,RaiseVolume,LowerVolume}
+    volume {mic,toggle,up,down}
+
+XF86Audio{Prev,Next,Play}
+    player {prev,next,play}
+
+alt + Return
+    urxvt
+
+alt + space
+    rofi -show run
+
+alt + shift + r
+    pkill -USR1 -x sxhkd
+
+super + b
+    chromium
+
+# BSPWM
+
+alt + q
+    bspc node -c
+
+alt + shift + q
+    bspc quit
+
+alt + shift + {h,j,k,l}
+    bspc node -p {west,south,north,east}
+
+alt + Escape
+    bspc node -p cancel
+
+alt + r
+    bspc node -n last.!automatic
+
+alt + {h,j,k,l}
+    bspc node -f {west,south,north,east}.local
+
+alt + control + {h,j,k,l}
+    move {west,south,north,east}
+
+alt + g
+	bspc node -s biggest.local || bspc node -s last.local
+
+alt + grave
+	bspc desktop -f last
+
+super + {h,j,k,l}
+    resize {west,south,north,east}
+
+super + {_,shift} + {1,2,3,4,5}
+    bspc {desktop -f,node -d} {1-5}
+
+super + {t,Tab,f}
+    bspc node -t ~{tiled,floating,fullscreen}

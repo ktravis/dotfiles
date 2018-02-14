@@ -1,0 +1,6 @@
+vim/.vim/.viminfo
+vim/.vim/.netrwhist
+vim/.vim/undo/*
+vim/.vim/swap/*
+vim/.vim/backup/*
+vim/.vim/plugged/*

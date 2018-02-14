@@ -1,0 +1,28 @@
+#!/usr/bin/bash
+
+loopit() {
+    local last="init"
+    local monitor="HDMI1"
+    local laptop="eDP1"
+    local now=$(cat /sys/class/drm/card0-HDMI-A-1/status)
+
+    while true; do
+        now=$(cat /sys/class/drm/card0-HDMI-A-1/status)
+        if [ "$last" != "$now" ] ; then
+          echo "status changed $last -> $now"
+          if [ "$now" == "connected" ] ; then
+              xrandr --output $monitor --primary --mode 2560x1440
+              xrandr --output $laptop --off
+              feh --randomize --bg-scale $HOME/Pictures/Wallpapers/Monitor/; compton -b
+          else
+              xrandr --output $laptop --primary --auto
+              xrandr --output $monitor --off
+              feh --randomize --bg-center $HOME/Pictures/Wallpapers/Laptop/; compton -b
+          fi
+        fi  
+        last=$now
+        sleep 1s
+    done
+}
+
+loopit
