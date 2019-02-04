@@ -1,7 +1,7 @@
 # dotfiles
 
 ```bash
-stow bash
-stow wm
-# etc...
+git clone https://github.com/ktravis/dotfiles
+cd dotfiles/
+./install.sh
 ```
