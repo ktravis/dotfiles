@@ -1,6 +1,6 @@
-vim/.vim/.viminfo
-vim/.vim/.netrwhist
-vim/.vim/undo/*
-vim/.vim/swap/*
-vim/.vim/backup/*
-vim/.vim/plugged/*
+.vim/.viminfo
+.vim/.netrwhist
+.vim/undo/*
+.vim/swap/*
+.vim/backup/*
+.vim/plugged/*

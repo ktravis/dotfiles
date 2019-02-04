@@ -1,13 +1,13 @@
 # SHORTCUTS
+#
+# NOTE: to future self, dunst is configured to only show the body of the
+# notification right now, for formatting reasons
 
-alt + {F5,F6}
-    xbacklight -{dec,inc} 10
+XF86MonBrightness{Down,Up}
+    xbacklight -{dec,inc} 10 && notify-send.sh -r 1000 -t 750 "" "brightness $(xbacklight -get | cut -d. -f1)%"
 
-XF86Audio{MicMute,Mute,RaiseVolume,LowerVolume}
-    volume {mic,toggle,up,down}
-
-XF86Audio{Prev,Next,Play}
-    player {prev,next,play}
+XF86Audio{Mute,RaiseVolume,LowerVolume}
+    xargs notify-send.sh -r 1001 -t 750 "" "$(volume {mute,up,down})"
 
 alt + Return
     urxvt
@@ -19,7 +19,19 @@ alt + shift + r
     pkill -USR1 -x sxhkd
 
 super + b
-    chromium
+    firefox
+
+super + l
+    sxlock
+
+alt + t
+    notify-send.sh -r 1002 "" "$(date +'%l:%M %P')"
+
+alt + shift + t
+    notify-send.sh -r 1002 "" "$(date +'%A %l:%M %P\n%F')"
+
+alt + b
+    notify-send.sh -r 1003 "" "battery $(cat /sys/class/power_supply/BAT0/capacity)% $(cat /sys/class/power_supply/BAT0/status)" 
 
 # BSPWM
 

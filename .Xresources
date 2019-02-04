@@ -1,8 +1,8 @@
 ! URXVT
 
 ! fonts
-URxvt.font: -uw-ttyp0-medium-r-*-*-*-160-*-*-*-*-*-*
-URxvt.boldFont: -uw-ttyp0-bold-r-*-*-*-160-*-*-*-*-*-*
+URxvt.font: xft:Fira Mono:12
+! URxvt.boldFont: -uw-ttyp0-bold-r-*-*-*-160-*-*-*-*-*-*
 
 ! settings
 URxvt.scrollBar: 0
@@ -15,9 +15,9 @@ URxvt.perl-ext-common: default,matcher,selection-to-clipboard
 URxvt.url-launcher: chromium
 URxvt.matcher.rend.0: fg13
 URxvt.matcher.button: 3
-
 ! FONTS
 
+Xft.dpi: 192
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.hintstyle: hintslight
@@ -57,11 +57,12 @@ Xft.lcdfilter: lcddefault
 
 ! xcursor
 Xcursor.theme: DMZ-White
+Xcursor.size: 48
 
 ! ROFI
 
 ! settings
-!rofi.font: Cherry 8
+rofi.font: Fira Mono 24
 rofi.separator-style: none
 rofi.scrollbar-width: 0
 rofi.padding: 15

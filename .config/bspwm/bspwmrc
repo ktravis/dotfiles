@@ -35,7 +35,9 @@ bspc rule -a Sxiv state=floating
 
 # UTILS
 
+feh --bg-scale /usr/share/backgrounds/System76-Honeycomb-by_Kate_Hazen_of_System76.png
 sxhkd &
-bar &
+#compton &
+#bar &
 
 # vim: ft=sh

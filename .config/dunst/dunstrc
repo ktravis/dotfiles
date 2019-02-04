@@ -1,13 +1,13 @@
 [global]
-    font = Cherry 8
-    format= "%s\n%b"
+    font = Cherry 12
+    format= "%b"
     markup = yes
     plain_text = no
     sort = yes
     indicate_hidden = yes
     alignment = center
-    word_wrap = yes
-    geometry = "350x0-30+60"
+    word_wrap = no
+    geometry = "750x0-30+60"
     shrink = yes
     follow = none
     show_indicators = no
