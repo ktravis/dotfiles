@@ -11,10 +11,7 @@ URxvt.internalBorder: 15
 URxvt.geometry: 70x30
 
 ! extensions
-URxvt.perl-ext-common: default,xkr-clipboard,matcher
-URxvt.iso14755:               false
-URxvt.keysym.Shift-Control-C: perl:clipboard:copy
-URxvt.keysym.Control-Insert:  perl:clipboard:copy
+URxvt.perl-ext-common: default,matcher,selection-to-clipboard
 URxvt.url-launcher: firefox
 URxvt.matcher.rend.0: fg13
 URxvt.matcher.button: 3

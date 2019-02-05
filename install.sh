@@ -26,3 +26,7 @@ create_link .config/dunst
 create_link .config/sxhkd
 create_link .config/polybar
 create_link .config/compton.conf
+
+for f in bin/*; do
+    create_link $f
+done
