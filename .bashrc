@@ -72,5 +72,6 @@ if ! shopt -oq posix; then
 fi
 
 # Environment variables
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$HOME/dotfiles/bin:$PATH
 export GOPATH=$HOME
+
