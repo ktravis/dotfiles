@@ -8,6 +8,10 @@ bspc monitor -d 1 2 3 4 5
 bspc config focus_follows_pointer true
 bspc config click_to_focus true
 
+bspc config pointer_modifier mod1
+bspc config pointer_action1 move
+
+
 bspc config split_ratio 0.5
 
 # BORDERS + GAPS
@@ -35,10 +39,9 @@ bspc rule -a Sxiv state=floating
 
 # UTILS
 
-feh --bg-scale /usr/share/backgrounds/System76-Honeycomb-by_Kate_Hazen_of_System76.png
+$HOME/.fehbg
 sxhkd &
 compton &
-polybar example &
-#bar &
+dunst &
 
 # vim: ft=sh

@@ -18,6 +18,8 @@ Plug 'honza/vim-snippets'
 Plug 'ajmwagar/vim-dues'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'owickstrom/vim-colors-paramount'
+Plug 'jremmen/vim-ripgrep'
+Plug 'zxqfl/tabnine-vim'
 
 Plug '~/dotfiles/verse-vim'
 
@@ -47,7 +49,7 @@ set nocompatible
 set wrap                " for long lines
 set textwidth=80        " #
 set formatoptions=qrn1  " #
-set colorcolumn=+1      " #
+" set colorcolumn=+1      " #
 set scrolloff=3
 set showmode
 set showcmd
@@ -233,6 +235,9 @@ nnoremap <leader>f :NERDTreeFind<CR>
 
 nnoremap <leader>gi :w<CR>:GoImports<CR>
 
+nnoremap <leader>r :Rg<space>
+nnoremap <leader>R :Rg<space><C-r><C-w><CR>
+
 " }}}
 
 " Local leader mappings -------------------------------------------- {{{
@@ -263,4 +268,8 @@ let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
+let g:go_fmt_command = "goimports"
+
 set mouse=a
+
+hi Comment ctermfg=244

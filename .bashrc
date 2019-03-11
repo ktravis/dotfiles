@@ -52,16 +52,8 @@ git_branch() {
 PROMPT_COMMAND='PS1X=$(p="${PWD#${HOME}}"; [ "${PWD}" != "${p}" ] && printf "~";IFS=/; for q in ${p:1}; do printf /${q:0:1}; done; printf "${q:1}")'
 
 
-if [ "$color_prompt" = yes ]; then
-    PS1='\[\033[01;32m\]$(git_branch)\[\033[00m\]\[\033[01;34m\]$PS1X\[\033[00m\] \$ '
-else
-    PS1='$PS1X \$ '
-fi
+PS1='\[\033[01;32m\]$(git_branch)\[\033[00m\]\[\033[01;34m\]$PS1X\[\033[00m\] \$ '
 unset color_prompt force_color_prompt
-
-if [ -f ~/.bashrc.aliases ]; then
-    . ~/.bashrc.aliases
-fi
 
 if ! shopt -oq posix; then
   if [ -f /usr/share/bash-completion/bash_completion ]; then
@@ -74,4 +66,12 @@ fi
 # Environment variables
 export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME
+export EDITOR=/usr/bin/vim
 
+if [ -f "$HOME/.bashrc.aliases" ]; then
+    . $HOME/.bashrc.aliases
+fi
+
+if [ -f "$HOME/.bashrc.local" ]; then
+    . $HOME/.bashrc.local
+fi

@@ -1,7 +1,7 @@
 ! URXVT
 
 ! fonts
-URxvt.font: xft:Fira Mono:12
+URxvt.font: xft:Fira Mono:12,xft:Wuncon Siji:size=12
 ! URxvt.boldFont: -uw-ttyp0-bold-r-*-*-*-160-*-*-*-*-*-*
 
 ! settings

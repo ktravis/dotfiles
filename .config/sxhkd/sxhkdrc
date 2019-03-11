@@ -4,13 +4,14 @@
 # notification right now, for formatting reasons
 
 XF86MonBrightness{Down,Up}
-    xbacklight -{dec,inc} 10 && notify-send.sh -r 1000 -t 750 "" "brightness $(xbacklight -get | cut -d. -f1)%"
+    light -{U,A} 5 && notify-send.sh -r 1000 -t 750 "" "$(light | cut -d. -f1)%"
 
 XF86Audio{Mute,RaiseVolume,LowerVolume}
     xargs notify-send.sh -r 1001 -t 750 "" "$(volume {mute,up,down})"
 
 alt + Return
-    urxvt
+    kitty
+    #urxvt
 
 alt + space
     rofi -show run
@@ -31,7 +32,7 @@ alt + shift + t
     notify-send.sh -r 1002 "" "$(date +'%A %l:%M %P\n%F')"
 
 alt + b
-    notify-send.sh -r 1003 "" "battery $(cat /sys/class/power_supply/BAT0/capacity)% $(cat /sys/class/power_supply/BAT0/status)" 
+    batstatus
 
 # BSPWM
 
@@ -48,10 +49,10 @@ alt + Escape
     bspc node -p cancel
 
 alt + r
-    bspc node -n last.!automatic
+    bspc node @parent -R 90
 
 alt + {h,j,k,l}
-    bspc node -f {west,south,north,east}.local
+    bspc node -f {west,south,north,east} #.local
 
 alt + control + {h,j,k,l}
     move {west,south,north,east}
@@ -64,6 +65,9 @@ alt + grave
 
 super + {h,j,k,l}
     resize {west,south,north,east}
+
+ctrl + alt + {1,2,3,4,5}
+    bspc desktop -f {1-5}
 
 super + {_,shift} + {1,2,3,4,5}
     bspc {desktop -f,node -d} {1-5}
