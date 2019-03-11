@@ -11,7 +11,7 @@ create_link() {
 }
 
 create_link .bashrc
-create_link .bashrc.alias
+create_link .bashrc.aliases
 
 create_link .vim
 create_link .vimrc
