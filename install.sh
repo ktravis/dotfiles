@@ -1,7 +1,7 @@
 #!/bin/bash
 
 create_link() {
-    dst=$HOME/$1
+    dst=${2:-$HOME}/$1
     if [ -e $dst ] && [ ! -L $dst ]; then
         echo "$dst exists and is not a symbolic link, oops"
         return
