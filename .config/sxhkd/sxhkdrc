@@ -14,7 +14,10 @@ alt + Return
     #urxvt
 
 alt + space
-    rofi -show run
+    rofi -m -1 -show run
+
+alt + w
+    rofi -m -1 -show window
 
 alt + shift + r
     pkill -USR1 -x sxhkd
@@ -69,8 +72,8 @@ super + {h,j,k,l}
 ctrl + alt + {1,2,3,4,5}
     bspc desktop -f {1-5}
 
-super + {_,shift} + {1,2,3,4,5}
-    bspc {desktop -f,node -d} {1-5}
+super + {_,shift} + {1,2,3,4,5,6,7}
+    bspc {desktop -f,node -d} {1-7}
 
 super + {t,Tab,f}
     bspc node -t ~{tiled,floating,fullscreen}

@@ -1,9 +1,3 @@
 #!/bin/sh
 
-VPN=$(pgrep -a openvpn$)
-RC=$?
-if [ $RC -eq 0 ]; then
-    printf " " && basename $(echo $VPN | head -n 1 | awk '{print $NF }' | cut -d '.' -f 1)
-else
-    printf ""
-fi
+nmcli --fields general.name,general.state conn show cs-dev | awk '!(NR%2){print p" "$2}{p=$2}'

@@ -3,7 +3,8 @@
 
 export PATH=$HOME/bin:$PATH
 
-bspc monitor -d 1 2 3 4 5
+bspc monitor eDP-1 -d 1 2 3 4 5
+bspc monitor DP-3 -d 6 7
 
 bspc config focus_follows_pointer true
 bspc config click_to_focus true

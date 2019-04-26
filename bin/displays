@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$1" != "forked" ]; then
+    echo "$0 forked" | at now
+    exit
+fi
+
+export DISPLAY=:0
+export XAUTHORITY=/home/ktravis/.Xauthority
+
+cardPath=/sys/$(udevadm info -q path -n /dev/dri/card0)
+
+main="eDP-1"
+conn="DP-3"
+
+conHdmi=$(xrandr | sed -n "/$conn connected/p")
+shaHdmi=$(sha1sum $cardPath/card0-$conn/edid | cut -f1 -d " ")
+
+if [ -n "$conHdmi" ]; then
+    xrandr --output $main --auto --output $conn --auto --right-of $main
+else
+    xrandr --output $main --auto --output $conn --off
+    /home/ktravis/bin/collectwindows
+fi

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+URGENCY=${URGENCY:-normal}
+
+export XAUTHORITY=/home/ktravis/.Xauthority
+export DISPLAY=:0
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u ktravis)/bus"
+
+notify-send.sh -u $URGENCY -r 1003 "" "battery $(cat /sys/class/power_supply/BAT0/capacity)% $(cat /sys/class/power_supply/BAT0/status)"

@@ -236,7 +236,7 @@ nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>gi :w<CR>:GoImports<CR>
 
 nnoremap <leader>r :Rg<space>
-nnoremap <leader>R :Rg<space><C-r><C-w><CR>
+nnoremap <leader>R :Rg<space>'\b<C-r><C-w>\b'<CR>
 
 " }}}
 
