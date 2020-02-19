@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CHILD_PROC_OFFSET=5
+
+ID=$(xdpyinfo | grep focus | cut -f4 -d " ")
+PID=$(($(xprop -id $ID | grep -m 1 PID | cut -d " " -f 3) + $CHILD_PROC_OFFSET))
+if [ -e "/proc/$PID/cwd" ]; then
+    alacritty --working-directory $(readlink /proc/$PID/cwd)
+else
+    alacritty
+fi

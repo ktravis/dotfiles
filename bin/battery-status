@@ -1,0 +1,12 @@
+#!/bin/bash
+
+battery() {
+    status=$(cat /sys/class/power_supply/BAT0/status)
+    if [ "$status" == "Charging" ]; then
+        echo -n "charging ($(cat /sys/class/power_supply/BAT0/capacity)%)"
+    else
+        echo $(cat /sys/class/power_supply/BAT0/capacity)%
+    fi
+}
+
+echo "battery: $(battery)"

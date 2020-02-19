@@ -3,6 +3,20 @@
 
 export PATH=$HOME/bin:$PATH
 
+#xset +fp ${HOME}/.fonts
+#xset fp rehash
+
+xsetroot -cursor_name left_ptr
+xset 180 120
+
+xrdb "${HOME}/.Xresources"
+
+setxkbmap -option ctrl:nocaps
+
+autorandr -c
+
+# General settings
+
 bspc monitor -d 1 2 3 4 5
 
 bspc config focus_follows_pointer true
@@ -40,6 +54,7 @@ bspc rule -a Sxiv state=floating
 # UTILS
 
 $HOME/.fehbg
+xss-lock -- sxlock &
 sxhkd &
 compton &
 dunst &

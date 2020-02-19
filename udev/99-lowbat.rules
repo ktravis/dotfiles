@@ -1,9 +1,9 @@
 # Notify when charging status changes
-SUBSYSTEM=="power_supply", ATTR{status}=="Charging", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/batstatus"
-SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/batstatus"
+SUBSYSTEM=="power_supply", ATTR{status}=="Charging", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/battery-notify"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/battery-notify"
 # Notify on low battery
-SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[11-20]", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ktravis/.Xauthority", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/batstatus"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[11-20]", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ktravis/.Xauthority", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/battery-notify"
 # Critical notification on <=10% battery
 SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-5]", RUN+="/usr/bin/systemctl hibernate"
 # Hibernate at <=5%
-SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-10]", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ktravis/.Xauthority", ENV{URGENCY}="critical", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/batstatus"
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-10]", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ktravis/.Xauthority", ENV{URGENCY}="critical", RUN+="/usr/bin/su ktravis -c /home/ktravis/bin/battery-notify"

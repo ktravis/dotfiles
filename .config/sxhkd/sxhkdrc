@@ -6,12 +6,21 @@
 XF86MonBrightness{Down,Up}
     light -{U,A} 5 && notify-send.sh -r 1000 -t 750 "" "$(light | cut -d. -f1)%"
 
-XF86Audio{Mute,RaiseVolume,LowerVolume}
-    xargs notify-send.sh -r 1001 -t 750 "" "$(volume {mute,up,down})"
+XF86AudioRaiseVolume
+    amixer set Master 10%+ && notify-send.sh -r 1001 -t 750 "" "$(amixer get Master | grep -oP '(?<=\[)[0-9]+%(?=\])')$(amixer get Master | grep -q '\[off\]' && echo ' (muted)')"
 
+XF86AudioLowerVolume
+    amixer set Master 10%- && notify-send.sh -r 1001 -t 750 "" "$(amixer get Master | grep -oP '(?<=\[)[0-9]+%(?=\])')$(amixer get Master | grep -q '\[off\]' && echo ' (muted)')"
+
+XF86AudioMute
+    amixer set Master toggle && notify-send.sh -r 1001 -t 750 "" "$(amixer get Master | grep -oP '(?<=\[)[0-9]+%(?=\])')$(amixer get Master | grep -q '\[off\]' && echo ' (muted)')"
+
+# start a terminal in the same working directory
 alt + Return
-    kitty
-    #urxvt
+    term
+
+alt + shift + Return
+    alacritty
 
 alt + space
     rofi -show run
@@ -20,7 +29,7 @@ alt + shift + r
     pkill -USR1 -x sxhkd
 
 super + b
-    firefox
+    chromium
 
 super + shift + l
     sxlock
@@ -32,7 +41,7 @@ alt + shift + t
     notify-send.sh -r 1002 "" "$(date +'%A %l:%M %P\n%F')"
 
 alt + b
-    batstatus
+    notify-send.sh -r 1003 "" "$(battery-status)"
 
 # BSPWM
 
@@ -55,22 +64,22 @@ alt + {h,j,k,l}
     bspc node -f {west,south,north,east} #.local
 
 alt + control + {h,j,k,l}
-    move {west,south,north,east}
+    bspc node -s {west,south,north,east}
 
 alt + g
 	bspc node -s biggest.local || bspc node -s last.local
 
 alt + grave
-	bspc desktop -f last
+	bspc desktop -f last.local
 
 super + {h,j,k,l}
-    resize {west,south,north,east}
+    bspc node -z {right -80 0,bottom 0 80,bottom 0 -80,right 80 0}
 
-ctrl + alt + {1,2,3,4,5}
-    bspc desktop -f {1-5}
+ctrl + alt + {1,2,3,4,5,6,7}
+    bspc desktop -f {1-7}
 
-super + {_,shift} + {1,2,3,4,5}
-    bspc {desktop -f,node -d} {1-5}
+super + {_,shift} + {1,2,3,4,5,6,7}
+    bspc {desktop -f,node -d} {1-7}
 
-super + {t,Tab,f}
-    bspc node -t ~{tiled,floating,fullscreen}
+super + {t,f}
+    bspc node -t ~{floating,fullscreen}

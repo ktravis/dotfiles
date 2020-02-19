@@ -1,58 +1,60 @@
-" Plugins
+" Plugins {{{
+
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go'
-Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'chriskempson/base16-vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
-Plug 'dylanaraps/wal'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'ajmwagar/vim-dues'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'owickstrom/vim-colors-paramount'
-Plug 'jremmen/vim-ripgrep'
-Plug 'zxqfl/tabnine-vim'
+Plug 'bcicen/vim-vice'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 
-Plug '~/dotfiles/verse-vim'
+Plug 'ajh17/vimcompletesme'
 
 call plug#end()
 
-set autowrite
-" Settings --------------------------------------------------- {{{
+" LSP OmniComplete {{{
+
+if executable('clangd')
+    augroup lsp_clangd
+        autocmd!
+        autocmd User lsp_setup call lsp#register_server({
+                    \ 'name': 'clangd',
+                    \ 'cmd': {server_info->['clangd']},
+                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    \ })
+        autocmd FileType c setlocal omnifunc=lsp#complete
+        autocmd FileType cpp setlocal omnifunc=lsp#complete
+        autocmd FileType objc setlocal omnifunc=lsp#complete
+        autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    augroup end
+endif
+
+" }}}
+
+" }}}
+
+" Settings {{{
+
 syntax on
 
 let g:lightline = {
     \ 'colorscheme': 'solarized',
     \  }
 
-let NERDTreeIgnore=['\~$', '\.pyc', '\.swp$', '\.git', '\.hg', '\.svn',
-      \ '\.ropeproject', '\.o', '\.bzr', '\.ipynb_checkpoints$',
-      \ '__pycache__',
-      \ '\.egg$', '\.egg-info$', '\.tox$', '\.idea$', '\.sass-cache',
-      \ '\.env$', '\.env[0-9]$', '\.coverage$', '\.tmp$', '\.gitkeep$',
-      \ '\.coverage$', '\.webassets-cache$', '\.vagrant$', '\.DS_Store',
-      \ '\.env-pypy$']
-
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-
 set nu
 set nocompatible
 set wrap                " for long lines
 set textwidth=80        " #
 set formatoptions=qrn1  " #
-" set colorcolumn=+1      " #
 set scrolloff=3
-set showmode
-set showcmd
 set hidden
 set expandtab
 set autoindent
@@ -69,6 +71,7 @@ set backspace=indent,eol,start
 set laststatus=2
 
 set noswapfile
+set nocompatible
 
 set backup
 set backupdir=$HOME/.vim/backup//
@@ -78,13 +81,8 @@ set undodir=$HOME/.vim/undo//
 set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
-" sudo hack
-cmap w!! silent w !sudo tee %
-
-" powerline
-let g:Powerline_symbols = 'fancy'
-
-"set ignorecase
+set magic
+set ignorecase
 set smartcase
 set gdefault " :%s/foo/bar/ instead of :%s/foo/bar/g
 set incsearch " highlight search stuff
@@ -92,184 +90,122 @@ set showmatch " #
 set hlsearch  " #
 set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
-" Color settings ------------------------------------------ {{{
+set wildmenu
+set wildmode=list:longest
+
+let g:netrw_liststyle = 3
+"let g:netrw_banner = 0
+
+let g:go_fmt_command = "goimports"
+
+set mouse=a
+set tags^=$HOME/.vim/ctags/c
+
+let g:gutentags_cache_dir='~/.vim/ctags/'
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+" set the cursor to bar in insert
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
 set t_Co=256
 set bg=dark
-"colorscheme base16-materia
-"colorscheme base16-eighties
-"colorscheme dues
-colorscheme paramount
-"set bg=light
-"colorscheme base16-solarized-light
-"colorscheme base16-atelier-plateau-light
-"colorscheme base16-gruvbox-dark-medium
-"hi Search guifg=white guibg=#839496
 
-
+colorscheme vice
 
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
-"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
 set guifont=Inconsolata\ Bold\ 12
-" }}}
 
-" Wildmenu ------------------------------------------------ {{{
- set wildmenu
- set wildmode=list:longest
- set wildignore+=.hg,.git,.svn                    " Version control
- set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
- set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
- set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
- set wildignore+=*.spl                            " compiled spelling word
- set wildignore+=*.sw?                            " Vim swap files
- set wildignore+=*.DS_Store                       " OSX bullshit
- set wildignore+=*.luac                           " Lua byte code
- set wildignore+=migrations                       " Django migrations
- set wildignore+=*.pyc                            " Python byte code
- set wildignore+=*.orig
-" }}}
+hi Visual ctermbg=8
+hi Comment ctermfg=244
+hi clear SignColumn
 
 " }}}
 
-" Mappings ------------------------------------------------ {{{
+" Mappings {{{
+
+" sudo hack
+cmap w!! silent w !sudo tee %
 
 let mapleader = ","
 inoremap jk <Esc>
 nnoremap ; :
-" (normal regex)
-nnoremap / /\v
-vnoremap / /\v
-" fix nav, disable arrows
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
 nnoremap <silent> j gj
 nnoremap <silent> k gk
 
-" goddamn help key
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
-
-nnoremap <silent> <F5> :source $MYVIMRC<CR>
+" Move to end/beginning of line
+nnoremap H ^
+vnoremap H ^
+nnoremap L $
+vnoremap L g_
 
 " moving between splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
- 
-" Swap between buffers
-nnoremap <C-g> :bnext<CR>
-nnoremap <C-f> :bprev<CR>
 
 " Space to toggle folds
 nnoremap <space> za
-vnoremap <space> za
 
-" Man
-nnoremap M K
-
-" D deletes to end of line
 nnoremap D d$
-
-" Don't move on *
-nnoremap * *<c-o>
-
-" Keep search in middle of window
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Move to end/beginning of line
-nnoremap H ^
-nnoremap L $
-vnoremap L g_
-
-" Move line up/down
-nnoremap - ddp
-nnoremap _ dd2kp
-
-" Split line, cc for normal S
 nnoremap S i<CR><ESC>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
-nnoremap <C-n> :NERDTreeToggle<CR>
 
-nnoremap gn :cnext<cr>
-nnoremap gp :cprev<cr>
+nnoremap <silent> <F5> :source $MYVIMRC<CR>
+
+" open netrw on the left, like nerdtree
+nnoremap - :24Lexplore<CR>
+
+nnoremap <C-p> :FZF<CR>
 
 " }}}
 
-" Leader mappings ----------------------------------------- {{{
+" Leader mappings {{{
 
-" turn off search highlights
-nnoremap <leader><space> :noh<CR>
-" re-hardwrap para
-nnoremap <leader>q gqip
 " reselect text that was just pasted
 nnoremap <leader>v V`]
-" edit .vimrc in a vertical split!
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
-" new vertical split, switch
-nnoremap <leader>w <C-w>v<C-w>l
-" Lazy substitute
-nnoremap <leader>s :%s/
-vnoremap <leader>s :%s/
-
-" Toggle invis chars
-nnoremap <leader>i :set list!<CR>
+nnoremap <leader><space> :noh<cr>
 
 " Copy and comment line
 nnoremap <leader>cz yy:call NERDComment(0, "toggle")<CR>p
 vnoremap <leader>cz y:call NERDComment('x', "toggle")<CR>`>p
 
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
 nnoremap <leader>b :Make<CR>
-nnoremap <F5> :so $MYVIMRC<CR>
-
-nnoremap <leader>f :NERDTreeFind<CR>
-
-nnoremap <leader>gi :w<CR>:GoImports<CR>
-
 nnoremap <leader>r :Rg<space>
-nnoremap <leader>R :Rg<space><C-r><C-w><CR>
+nnoremap <leader>R :Rg<space>'\b<C-r><C-w>\b'<CR>
+
+nnoremap <leader>f :GFiles<CR>
+nnoremap <leader>h :History<CR>
 
 " }}}
 
-" Local leader mappings -------------------------------------------- {{{
+" Local leader mappings {{{
 
 " }}}
 
-" vimtags ------------------------------------------------- {{{
-let Tlist_Ctags_Cmd = "/usr/bin/ctags"
-let Tlist_WinWidth = 50
-map <F4> :TlistToggle<CR>
-" }}}
+" Auto-command groups {{{
 
-" Auto-command groups ------------------------------------- {{{
 autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd vimenter * if !argc() | NERDTree | endif
 
-" Vimscript file settings --------------------------------- {{{
+autocmd FileType c   let b:vcm_tab_complete = "omni"
+autocmd FileType cpp let b:vcm_tab_complete = "omni"
+
+" Vimscript file settings {{{
+
 augroup filetype_vim
     au!
     au FileType vim setlocal foldmethod=marker
     au FileType vim setlocal foldlevelstart=0
 augroup END
-" }}}
 
 " }}}
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-let g:go_fmt_command = "goimports"
-
-set mouse=a
-
-hi Comment ctermfg=244
+" }}}
