@@ -75,3 +75,7 @@ fi
 if [ -f "$HOME/.bashrc.local" ]; then
     . $HOME/.bashrc.local
 fi
+
+ccd() {
+    mkdir -p $1 && cd $1
+}

@@ -21,6 +21,15 @@ alias gcm='git commit -m'
 alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
+
+. $(which complete_alias)
 complete -F _complete_alias k
 complete -F _complete_alias kx
 complete -F _complete_alias kn
+alias spotify="spotify --force-device-scale-factor=2"
+
+alias lt='exa -lhaFT -L 2 --group-directories-first'
+
+alias dnstools='kubectl run -it --rm --restart=Never --image=infoblox/dnstools:latest dnstools'
+
+alias sus="systemctl suspend"

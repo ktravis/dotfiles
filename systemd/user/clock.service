@@ -1,0 +1,6 @@
+[Unit]
+Description=Notify 10 minutes till
+[Service]
+Environment=DISPLAY=:0
+Environment=XAUTHORIY=/home/ktravis/.Xauthority
+ExecStart=/home/ktravis/bin/notify-time

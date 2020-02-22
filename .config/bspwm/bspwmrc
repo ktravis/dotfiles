@@ -37,12 +37,15 @@ bspc config external_rules_command "$(which rules)"
 
 bspc rule -a mpv state=floating
 bspc rule -a Sxiv state=floating
+bspc rule -a Pavucontrol state=floating
+bspc rule -a Blueman-manager state=floating
 
 # UTILS
 
 $HOME/.fehbg
 sxhkd &
 compton &
-dunst &
+songloop &
+batloop &
 
 # vim: ft=sh

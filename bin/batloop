@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# only run one at a time
+pidfile=/var/run/user/$(id -u $(whoami))/batloop.pid
+if [ -f "$pidfile" ] && kill -0 `cat $pidfile` 2>/dev/null; then
+    echo still running
+    exit 1
+fi  
+echo $$ > $pidfile
+
+f=/tmp/last_bat_charge
+
+while true; do
+    last_charge=$(cat $f 2>/dev/null || echo 150)
+    charge=$(acpi | grep -Eo '([0-9]+)%' | sed 's/%$//')
+    echo "last_charge $last_charge, new charge $charge"
+    URGENCY=normal
+    if [ $charge -lt 10 ]; then
+        URGENCY=critical    
+    fi
+    if [ $charge -lt 6 ] || [ $(( $last_charge - $charge )) -gt 4 ]; then
+        URGENCY=$URGENCY batstatus
+        echo $charge > $f
+    elif [ $charge -gt $last_charge ]; then
+        echo $charge > $f
+    fi
+    sleep 5
+done

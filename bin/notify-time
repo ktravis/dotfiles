@@ -1,0 +1,10 @@
+#!/bin/sh
+
+URGENCY=${URGENCY:-normal}
+
+export PATH=$PATH:/usr/local/bin
+export XAUTHORITY=/home/ktravis/.Xauthority
+export DISPLAY=:0
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u ktravis)/bus"
+
+/usr/local/bin/notify-send.sh -u $URGENCY -r 1002 "" "$(date +'%l:%M %P')"

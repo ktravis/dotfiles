@@ -1,1 +1,1 @@
-ACTION=="change",RUN+="/home/ktravis/bin/displays"
+KERNEL=="card0", SUBSYSTEM=="drm", ACTION=="change", ENV{DELAY}="3", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/ktravis/.Xauthority", RUN+="/home/ktravis/bin/displays"

@@ -1,55 +1,50 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/vim-easy-align'
-Plug 'fatih/vim-go'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
-Plug 'chriskempson/base16-vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'itchyny/lightline.vim'
-Plug 'dylanaraps/wal'
 Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'ajmwagar/vim-dues'
+Plug 'airblade/vim-gitgutter'
+Plug 'bcicen/vim-vice'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'owickstrom/vim-colors-paramount'
+Plug 'fatih/vim-go'
+Plug 'honza/vim-snippets'
+Plug 'itchyny/lightline.vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'zxqfl/tabnine-vim'
-
-Plug '~/dotfiles/verse-vim'
+Plug 'neoclide/coc.nvim', {'do': '~/.npm/bin/yarn install --frozen-lockfile'}
+Plug 'scrooloose/nerdcommenter'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
 
 call plug#end()
 
 set autowrite
+
 " Settings --------------------------------------------------- {{{
+
 syntax on
 
-let g:lightline = {
-    \ 'colorscheme': 'solarized',
-    \  }
+let g:lightline = {}
+
+let g:lightline.colorscheme = 'vice'
 
 let NERDTreeIgnore=['\~$', '\.pyc', '\.swp$', '\.git', '\.hg', '\.svn',
-      \ '\.ropeproject', '\.o', '\.bzr', '\.ipynb_checkpoints$',
+      \ '\.ropeproject', '\.o$', '\.bzr', '\.ipynb_checkpoints$',
       \ '__pycache__',
       \ '\.egg$', '\.egg-info$', '\.tox$', '\.idea$', '\.sass-cache',
-      \ '\.env$', '\.env[0-9]$', '\.coverage$', '\.tmp$', '\.gitkeep$',
+      \ '\.coverage$', '\.tmp$', '\.gitkeep$',
       \ '\.coverage$', '\.webassets-cache$', '\.vagrant$', '\.DS_Store',
       \ '\.env-pypy$']
 
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
-set nu
+set number
 set nocompatible
 set wrap                " for long lines
 set textwidth=80        " #
-set formatoptions=qrn1  " #
-" set colorcolumn=+1      " #
+set formatoptions=jqrn1 " #
 set scrolloff=3
 set showmode
 set showcmd
@@ -67,6 +62,7 @@ set ttyfast
 set ruler
 set backspace=indent,eol,start
 set laststatus=2
+set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
 set noswapfile
 
@@ -78,57 +74,34 @@ set undodir=$HOME/.vim/undo//
 set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
-" sudo hack
-cmap w!! silent w !sudo tee %
-
-" powerline
-let g:Powerline_symbols = 'fancy'
-
-"set ignorecase
+set ignorecase
 set smartcase
-set gdefault " :%s/foo/bar/ instead of :%s/foo/bar/g
+set gdefault  " :%s/foo/bar/ instead of :%s/foo/bar/g
 set incsearch " highlight search stuff
 set showmatch " #
 set hlsearch  " #
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
+
+set wildmenu
+set wildmode=list:longest
 
 " Color settings ------------------------------------------ {{{
+
+colorscheme vice
+
 set t_Co=256
 set bg=dark
-"colorscheme base16-materia
-"colorscheme base16-eighties
-"colorscheme dues
-colorscheme paramount
-"set bg=light
-"colorscheme base16-solarized-light
-"colorscheme base16-atelier-plateau-light
-"colorscheme base16-gruvbox-dark-medium
-"hi Search guifg=white guibg=#839496
+set termguicolors
 
+" }}}
 
+" gvim settings ------------------------------------------ {{{
 
 set guioptions-=m
 set guioptions-=T
 set guioptions-=r
 set guioptions-=L
-"set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 10
 set guifont=Inconsolata\ Bold\ 12
-" }}}
 
-" Wildmenu ------------------------------------------------ {{{
- set wildmenu
- set wildmode=list:longest
- set wildignore+=.hg,.git,.svn                    " Version control
- set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
- set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
- set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
- set wildignore+=*.spl                            " compiled spelling word
- set wildignore+=*.sw?                            " Vim swap files
- set wildignore+=*.DS_Store                       " OSX bullshit
- set wildignore+=*.luac                           " Lua byte code
- set wildignore+=migrations                       " Django migrations
- set wildignore+=*.pyc                            " Python byte code
- set wildignore+=*.orig
 " }}}
 
 " }}}
@@ -138,6 +111,7 @@ set guifont=Inconsolata\ Bold\ 12
 let mapleader = ","
 inoremap jk <Esc>
 nnoremap ; :
+vnoremap ; :
 " (normal regex)
 nnoremap / /\v
 vnoremap / /\v
@@ -152,11 +126,6 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 nnoremap <silent> j gj
 nnoremap <silent> k gk
-
-" goddamn help key
-inoremap <F1> <ESC>
-nnoremap <F1> <ESC>
-vnoremap <F1> <ESC>
 
 nnoremap <silent> <F5> :source $MYVIMRC<CR>
 
@@ -190,6 +159,7 @@ nnoremap N Nzzzv
 " Move to end/beginning of line
 nnoremap H ^
 nnoremap L $
+vnoremap H ^
 vnoremap L g_
 
 " Move line up/down
@@ -202,6 +172,9 @@ nnoremap <C-n> :NERDTreeToggle<CR>
 
 nnoremap gn :cnext<cr>
 nnoremap gp :cprev<cr>
+
+" sudo hack
+cmap w!! silent w !sudo tee %
 
 " }}}
 
@@ -233,7 +206,7 @@ nnoremap <F5> :so $MYVIMRC<CR>
 
 nnoremap <leader>f :NERDTreeFind<CR>
 
-nnoremap <leader>gi :w<CR>:GoImports<CR>
+"nnoremap <leader>gi :w<CR>:GoImports<CR>
 
 nnoremap <leader>r :Rg<space>
 nnoremap <leader>R :Rg<space>'\b<C-r><C-w>\b'<CR>
@@ -262,14 +235,54 @@ augroup filetype_vim
 augroup END
 " }}}
 
+augroup filetype_yaml
+    au!
+    au FileType yaml setlocal tabstop=2
+    au FileType yaml setlocal softtabstop=2
+    au FileType yaml setlocal shiftwidth=2
+augroup END
+
+" quickfix
+autocmd! FileType qf nnoremap <buffer> <C-v> <C-w><Enter><C-w>L
+
 " }}}
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:go_fmt_autosave = 0
+"let g:go_fmt_command = "goimports"
+let g:go_def_mode = "gopls"
+let g:go_info_mode="gopls"
 
-let g:go_fmt_command = "goimports"
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
+
+augroup goImport
+  autocmd!
+  autocmd BufWritePre *.go call CocAction('runCommand', 'editor.action.organizeImport')
+augroup END
 
 set mouse=a
+set ttymouse=sgr
 
 hi Comment ctermfg=244
+
+"let &t_ut=''
+
+augroup resCur
+  autocmd!
+  autocmd BufReadPost * call setpos(".", getpos("'\""))
+augroup END
+
+" Smaller updatetime for CursorHold & CursorHoldI
+set updatetime=300
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+set signcolumn=yes
+
+abbreviate todo: TODO(ktravis):
+abbreviate TODO: TODO(ktravis):
+
+nmap <leader>rn <Plug>(coc-rename)
+
+inoremap <silent><expr> <c-n> coc#refresh()
+

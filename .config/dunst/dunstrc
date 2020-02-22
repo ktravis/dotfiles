@@ -2,16 +2,17 @@
     font = Cherry 12
     format= "%b"
     markup = yes
+    icon_position = right
     plain_text = no
     sort = yes
     indicate_hidden = yes
-    alignment = center
+    alignment = left
     word_wrap = no
     geometry = "750x0-30+60"
     shrink = yes
     follow = none
     show_indicators = no
-    separator_height = 0
+    separator_height = 5
     padding = 15
     horizontal_padding = 15
 

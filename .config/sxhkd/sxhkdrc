@@ -9,8 +9,16 @@ XF86MonBrightness{Down,Up}
 XF86Audio{Mute,RaiseVolume,LowerVolume}
     xargs notify-send.sh -r 1001 -t 750 "" "$(volume {mute,up,down})"
 
+# NOTE: spotifyd doesn't seem to respect playerctl's next and previous right now
+XF86AudioPlay
+    playerctl play-pause
+
+XF86Audio{Prev,Next}
+    song{prev,next}
+
 alt + Return
     kitty
+    #st
     #urxvt
 
 alt + space
@@ -22,8 +30,17 @@ alt + w
 alt + shift + r
     pkill -USR1 -x sxhkd
 
+alt + e
+    rofimoji --rofi-args "-m -1"
+
+alt + m
+    songstatus
+
+alt + p
+    source $HOME/.spotify-creds && spotlight
+
 super + b
-    firefox
+    chromium
 
 super + shift + l
     sxlock
@@ -64,13 +81,13 @@ alt + g
 	bspc node -s biggest.local || bspc node -s last.local
 
 alt + grave
-	bspc desktop -f last
+	bspc desktop -f last.local
 
 super + {h,j,k,l}
     resize {west,south,north,east}
 
-ctrl + alt + {1,2,3,4,5}
-    bspc desktop -f {1-5}
+ctrl + alt + {1,2,3,4,5,6,7}
+    bspc desktop -f {1-7}
 
 super + {_,shift} + {1,2,3,4,5,6,7}
     bspc {desktop -f,node -d} {1-7}

@@ -1,22 +1,16 @@
 #!/bin/sh
 
-#if cat /proc/modules | grep -q 'nvidia'; then
-    #xrandr --setprovideroutputsource modesetting NVIDIA-0
-    #xrandr --auto
-    #xrandr --dpi 96
-#else
-    #xrandr --dpi 192
-#fi
+FONTDIR=$HOME/fonts
+
 xrandr --dpi 192
 
-#xrdb "${HOME}/.Xresources"
+mkdir -p $FONTDIR && xset +fp $FONTDIR
 
-xset +fp ${HOME}/.fonts
+#xsetroot -cursor_name left_ptr
 xset fp rehash
-
-xsetroot -cursor_name left_ptr
-#xset 180 120
-#xss-lock -- sxlock &
+xset dpms 180 300
+xset -b
+xss-lock -- sxlock &
 
 setxkbmap -option ctrl:nocaps
 autorandr -c
