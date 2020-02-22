@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# do we even need this? piping to at was causing a problem (I think)
+#if [ "$1" != "forked" ]; then
+    #echo "$0 forked" | at now
+    #$0 forked
+    #exit
+#fi
+
+id=$RANDOM
+LOGFILE=$HOME/logs/displays.txt
+
+log() {
+    echo "[$id] $(date) - $@" >> $LOGFILE
+}
+
+mkdir -p logs
+
+export DISPLAY=:0
+export XAUTHORITY=$HOME/.Xauthority
+
+log "Before query"
+cardPath=/sys/$(udevadm info -q path -n /dev/dri/card0)
+log "After query $cardPath"
+
+main="eDP-1"
+conn1="DP-1"
+conn3="DP-3"
+
+if [ ! -z "$DELAY" ]; then
+    log "waiting $DELAY seconds before xrandr calls"
+    sleep "$DELAY"
+fi
+
+log "before xrandrs"
+conUsb3=$(xrandr | sed -n "/$conn1 connected/p")
+conHdmi=$(xrandr | sed -n "/$conn3 connected/p")
+log "after xrandrs ($conUsb3, $conHdmi)"
+
+if [ -n "$conHdmi" ]; then
+    log "HDMI connected"
+    xrandr --output $main --auto --output $conn3 --auto --primary --right-of $main --gamma 0.8:0.8:0.8 --output $conn1 --off
+    log "HDMI configured"
+    sleep 1
+    bspc monitor $conn3 -d 6 7
+elif [ -n "$conUsb3" ]; then
+    log "USB connected"
+    xrandr --output $main --auto --output $conn1 --auto --primary --right-of $main --gamma 1:1:1 --output $conn3 --off
+    log "USB configured"
+    sleep 1
+    bspc monitor $conn1 -d 6 7
+else
+    log "Other"
+    xrandr --output $main --primary --auto --output $conn1 --off --output $conn3 --off
+    sleep 2
+    log "I am running collectwindows"
+    collectwindows
+fi
+
+setxkbmap -option ctrl:nocaps

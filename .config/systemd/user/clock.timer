@@ -1,0 +1,7 @@
+[Unit]
+Description=10 minutes till
+[Timer]
+OnCalendar=*:0,25,30,55:0
+AccuracySec=1s
+[Install]
+WantedBy=multi-user.target

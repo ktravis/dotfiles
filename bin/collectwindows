@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bspc node -f @6:/ && bspc node -d 1
+bspc node -f @7:/ && bspc node -d 2

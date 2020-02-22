@@ -25,6 +25,9 @@ alt + shift + Return
 alt + space
     rofi -show run
 
+alt + w
+    rofi -m -1 -show window
+
 alt + shift + r
     pkill -USR1 -x sxhkd
 
@@ -81,5 +84,5 @@ ctrl + alt + {1,2,3,4,5,6,7}
 super + {_,shift} + {1,2,3,4,5,6,7}
     bspc {desktop -f,node -d} {1-7}
 
-super + {t,f}
-    bspc node -t ~{floating,fullscreen}
+super + {f,t,F,p}
+    bspc node -t {~fullscreen,tiled,floating,pseudo_tiled}

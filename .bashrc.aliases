@@ -21,6 +21,7 @@ alias gcm='git commit -m'
 alias k='kubectl'
 alias kx='kubectx'
 alias kn='kubens'
+. $(which complete_alias)
 complete -F _complete_alias k
 complete -F _complete_alias kx
 complete -F _complete_alias kn

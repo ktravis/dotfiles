@@ -77,3 +77,7 @@ if [ -f "$HOME/.bashrc.local" ]; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+ccd() {
+    mkdir -p $1 && cd $1
+}

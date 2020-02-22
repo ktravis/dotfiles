@@ -45,9 +45,8 @@ endif
 
 syntax on
 
-let g:lightline = {
-    \ 'colorscheme': 'solarized',
-    \  }
+let g:lightline = {}
+let g:lightline.colorscheme = 'vice'
 
 set nu
 set nocompatible
@@ -92,6 +91,8 @@ set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
 
 set wildmenu
 set wildmode=list:longest
+set updatetime=300
+set signcolumn=yes
 
 let g:netrw_liststyle = 3
 "let g:netrw_banner = 0
@@ -99,6 +100,7 @@ let g:netrw_liststyle = 3
 let g:go_fmt_command = "goimports"
 
 set mouse=a
+set ttymouse=sgr
 set tags^=$HOME/.vim/ctags/c
 
 let g:gutentags_cache_dir='~/.vim/ctags/'
@@ -126,6 +128,15 @@ set guifont=Inconsolata\ Bold\ 12
 hi Visual ctermbg=8
 hi Comment ctermfg=244
 hi clear SignColumn
+
+" FZF Rg preview
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
+  \   fzf#vim#with_preview(), <bang>0)
+
+" FZF don't skip hidden dirs
+let $FZF_DEFAULT_COMMAND = 'rg --hidden -l ""'
 
 " }}}
 
@@ -208,4 +219,13 @@ augroup END
 
 " }}}
 
+" }}}
+
+" Abbreviations {{{
+abbreviate todo: TODO(ktravis):
+abbreviate TODO: TODO(ktravis):
+abbreviate note: NOTE(ktravis):
+abbreviate NOTE: NOTE(ktravis):
+abbreviate xxx: NOTE(ktravis):
+abbreviate XXX: NOTE(ktravis):
 " }}}
