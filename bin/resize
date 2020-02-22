@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+#
+# sourced from https://github.com/MarinHoc/dotfiles
+
+step=100
+
+bspc query -N -n focused.floating > /dev/null && \
+    step=20
+
+case "$1" in
+    west) dir=right; falldir=left; x="-$step"; y=0;;
+    east) dir=right; falldir=left; x="$step"; y=0;;
+    north) dir=top; falldir=bottom; x=0; y="-$step";;
+    south) dir=top; falldir=bottom; x=0; y="$step";;
+esac
+
+bspc node -z "$dir" "$x" "$y" || \
+    bspc node -z "$falldir" "$x" "$y"
+
+# vim: ft=sh
