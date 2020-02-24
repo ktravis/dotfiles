@@ -1,19 +1,24 @@
 [global]
-    font = Cherry 12
-    format= "%b"
-    markup = yes
+    font = Fira Mono
+    format= "%s\n%b"
+    markup = full
     plain_text = no
     sort = yes
     indicate_hidden = yes
-    alignment = center
+    alignment = right
     word_wrap = no
     geometry = "750x0-30+60"
     shrink = yes
     follow = none
-    show_indicators = no
+    show_indicators = false
     separator_height = 0
     padding = 15
     horizontal_padding = 15
+    mouse_left_click = do_action
+    dmenu= "rofi -dmenu"
+
+[shortcuts]
+    #history = ctrl+h
 
 [urgency_low]
     background = "#021B21"

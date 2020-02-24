@@ -1,0 +1,4 @@
+[Unit]
+Description=Notify when updates are available
+[Service]
+ExecStart=bash -c "~/bin/upgrade-notify"

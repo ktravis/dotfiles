@@ -1,0 +1,7 @@
+[Unit]
+Description=Check for updates
+[Timer]
+OnBootSec=5 min
+OnUnitActiveSec=30 min
+[Install]
+WantedBy=multi-user.target

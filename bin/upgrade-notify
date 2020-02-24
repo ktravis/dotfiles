@@ -1,0 +1,13 @@
+#!/bin/bash
+
+pkgs=$(yay -Qu)
+[ -z "$pkgs" ] && exit 0
+
+case $(dunstify -r 2001 -t 0 -A a,"install" "$(echo "$pkgs" | wc -l) packages have updates" "$pkgs") in
+    a)
+        alacritty --class floaty -e /bin/bash -c 'yay -Syu' &
+        ;;
+    *)
+        echo naw
+        ;;
+esac

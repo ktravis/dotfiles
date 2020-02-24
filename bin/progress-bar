@@ -1,0 +1,18 @@
+#!/bin/bash
+
+FILL_CHAR=${FILL_CHAR:-=}
+EMPTY_CHAR=${EMPTY_CHAR:- }
+
+TOTAL_WIDTH=$1
+PCT=${2:--}
+if [ "$PCT" == "-" ]; then
+   read PCT 
+fi
+
+FILL_COUNT=$(( $(( $PCT * $TOTAL_WIDTH )) / 100 ))
+EMPTY_COUNT=$(( $TOTAL_WIDTH - $FILL_COUNT ))
+
+repeat() {
+    printf "%$2s" | sed "s/ /$1/g"
+}
+printf "[$(repeat "$FILL_CHAR" $FILL_COUNT)$(repeat "$EMPTY_CHAR" $EMPTY_COUNT)]"

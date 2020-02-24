@@ -1,5 +1,5 @@
 [Unit]
-Description=10 minutes till
+Description=Notification at certain times
 [Timer]
 OnCalendar=*:0,25,30,55:0
 AccuracySec=1s

@@ -1,4 +1,4 @@
 [Unit]
 Description=Notify 10 minutes till
 [Service]
-ExecStart=bash -c "~/bin/notify-time"
+ExecStart=bash -c "~/bin/time-notify"

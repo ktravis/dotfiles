@@ -3,7 +3,7 @@
 all_files = $(wildcard .bashrc*) .vim/ .vimrc .Xresources .hushlogin $(wildcard .config/*/) $(wildcard bin/*)
 targets = $(addprefix $(HOME)/,$(all_files))
 
-services=clock.timer
+services=clock.timer updates.timer
 
 install: $(targets) services
 $(HOME)/%: %

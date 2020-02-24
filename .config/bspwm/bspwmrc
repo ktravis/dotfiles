@@ -48,14 +48,21 @@ bspc config gapless_monocle     true
 
 bspc config external_rules_command "$(which rules)"
 
-bspc rule -a mpv state=floating
-bspc rule -a Sxiv state=floating
+bspc rule -a '*:floaty' state=floating
 
 # UTILS
 
+mkdir -p $HOME/logs
+
+sxhkd_loop() {
+    sxhkd 2>&1 >/dev/null | tee $HOME/logs/sxhkd-errors.txt | while read line; do
+        notify-send.sh -u critical -r 3033 "$line"
+    done
+}
+
 $HOME/.fehbg
 xss-lock -- sxlock &
-sxhkd &
+sxhkd_loop &
 compton &
 dunst &
 battery-status-loop &

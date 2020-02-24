@@ -7,4 +7,4 @@ export XAUTHORITY=$HOME/.Xauthority
 export DISPLAY=:0
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(whoami))/bus"
 
-notify-send.sh -u $URGENCY -r 1002 "" "$(date +'%l:%M %P')"
+notify-send.sh -u $URGENCY -r 1002 "$(date +'%l:%M %P')"
