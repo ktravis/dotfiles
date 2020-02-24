@@ -1,0 +1,7 @@
+#!/bin/bash
+
+x=1
+for disp in $AUTORANDR_MONITORS; do
+    bspc monitor $disp -d $(seq $x $((x+4)) | tr '\n' ' ')
+    x=$((x+5))
+done

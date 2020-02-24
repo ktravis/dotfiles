@@ -6,3 +6,4 @@
 .vim/plugged/*
 .vim/.viminf*
 .vim/ctags
+.config/autorandr/*
