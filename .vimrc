@@ -11,31 +11,29 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
-Plug 'bcicen/vim-vice'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+Plug 'sjl/badwolf'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'ajh17/vimcompletesme'
+"Plug 'ajh17/vimcompletesme'
 
 call plug#end()
 
 " LSP OmniComplete {{{
 
-if executable('clangd')
-    augroup lsp_clangd
-        autocmd!
-        autocmd User lsp_setup call lsp#register_server({
-                    \ 'name': 'clangd',
-                    \ 'cmd': {server_info->['clangd']},
-                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    \ })
-        autocmd FileType c setlocal omnifunc=lsp#complete
-        autocmd FileType cpp setlocal omnifunc=lsp#complete
-        autocmd FileType objc setlocal omnifunc=lsp#complete
-        autocmd FileType objcpp setlocal omnifunc=lsp#complete
-    augroup end
-endif
+"if executable('clangd')
+    "augroup lsp_clangd
+        "autocmd!
+        "autocmd User lsp_setup call lsp#register_server({
+                    "\ 'name': 'clangd',
+                    "\ 'cmd': {server_info->['clangd']},
+                    "\ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+                    "\ })
+        "autocmd FileType c setlocal omnifunc=lsp#complete
+        "autocmd FileType cpp setlocal omnifunc=lsp#complete
+        "autocmd FileType objc setlocal omnifunc=lsp#complete
+        "autocmd FileType objcpp setlocal omnifunc=lsp#complete
+    "augroup end
+"endif
 
 " }}}
 
@@ -46,7 +44,7 @@ endif
 syntax on
 
 let g:lightline = {}
-let g:lightline.colorscheme = 'vice'
+let g:lightline.colorscheme = 'darcula'
 
 set nu
 set nocompatible
@@ -117,7 +115,7 @@ let &t_EI = "\e[2 q"
 set t_Co=256
 set bg=dark
 
-colorscheme vice
+colorscheme goodwolf
 
 set guioptions-=m
 set guioptions-=T
@@ -125,8 +123,7 @@ set guioptions-=r
 set guioptions-=L
 set guifont=Inconsolata\ Bold\ 12
 
-hi Visual ctermbg=8
-hi Comment ctermfg=244
+hi link CocErrorFloat Normal
 hi clear SignColumn
 
 " FZF Rg preview
@@ -134,6 +131,16 @@ command! -bang -nargs=* Rg
   \ call fzf#vim#grep(
   \   'rg --column --line-number --no-heading --color=always --smart-case '.shellescape(<q-args>), 1,
   \   fzf#vim#with_preview(), <bang>0)
+
+command! -bang -nargs=* Goob
+\ call fzf#run({
+\   'source':
+\     map(split(globpath(&rtp, "colors/*.vim"), "\n"),
+\         "substitute(fnamemodify(v:val, ':t'), '\\..\\{-}$', '', '')"),
+\   'sink':    'edit',
+\   'options': '+m',
+\   'left':    30
+\ })<CR>
 
 " FZF don't skip hidden dirs
 let $FZF_DEFAULT_COMMAND = 'rg --hidden -l ""'
@@ -174,7 +181,36 @@ nnoremap <silent> <F5> :source $MYVIMRC<CR>
 " open netrw on the left, like nerdtree
 nnoremap - :24Lexplore<CR>
 
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :History<CR>
+
+" coc.nvim {{{
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+nmap <silent> gn <Plug>(coc-diagnostic-prev)
+nmap <silent> gp <Plug>(coc-diagnostic-next)
+
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" }}}
 
 " }}}
 
@@ -189,12 +225,12 @@ nnoremap <leader>cz yy:call NERDComment(0, "toggle")<CR>p
 vnoremap <leader>cz y:call NERDComment('x', "toggle")<CR>`>p
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
-nnoremap <leader>b :Make<CR>
 nnoremap <leader>r :Rg<space>
 nnoremap <leader>R :Rg<space>'\b<C-r><C-w>\b'<CR>
 
+
 nnoremap <leader>f :GFiles<CR>
-nnoremap <leader>h :History<CR>
+nnoremap <leader>F :FZF<CR>
 
 " }}}
 
