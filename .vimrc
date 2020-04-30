@@ -15,12 +15,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'sjl/badwolf'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': '~/.npm/bin/yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'bcicen/vim-vice'
 Plug 'pbogut/fzf-mru.vim'
 "Plug 'ludovicchabant/vim-gutentags'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
+"Plug 'prabirshrestha/async.vim'
+"Plug 'prabirshrestha/vim-lsp'
 
 "Plug 'ajh17/vimcompletesme'
 
