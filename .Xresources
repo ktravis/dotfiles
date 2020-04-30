@@ -17,7 +17,10 @@ URxvt.matcher.rend.0: fg13
 URxvt.matcher.button: 3
 ! FONTS
 
-Xft.dpi: 96
+! lo dpi
+! Xft.dpi: 192
+! hi dpi
+Xft.dpi: 192
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.hintstyle: hintslight
@@ -65,11 +68,15 @@ Xft.lcdfilter: lcddefault
 
 ! xcursor
 Xcursor.theme: DMZ-White
+Xcursor.size: 48
 
 ! ROFI
 
 ! settings
+! lo dpi
 rofi.font: Fira Mono 12
+! hi dpi
+rofi.font: Fira Mono 24
 rofi.separator-style: none
 rofi.scrollbar-width: 0
 rofi.padding: 15
