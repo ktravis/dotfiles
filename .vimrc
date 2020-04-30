@@ -4,7 +4,10 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+"Plug 'SirVer/ultisnips'
+Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
+Plug 'honza/vim-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-repeat'
@@ -12,7 +15,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'itchyny/lightline.vim'
 Plug 'sjl/badwolf'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': '~/.npm/bin/yarn install --frozen-lockfile'}
+"Plug 'bcicen/vim-vice'
+Plug 'pbogut/fzf-mru.vim'
+"Plug 'ludovicchabant/vim-gutentags'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
 
 "Plug 'ajh17/vimcompletesme'
 
@@ -49,8 +57,9 @@ let g:lightline.colorscheme = 'darcula'
 set nu
 set nocompatible
 set wrap                " for long lines
-set textwidth=80        " #
-set formatoptions=qrn1  " #
+set textwidth=120       " #
+set formatoptions=qn1  " #
+set formatoptions-=tca
 set scrolloff=3
 set hidden
 set expandtab
@@ -179,38 +188,31 @@ nnoremap S i<CR><ESC>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
 nnoremap <silent> <F5> :source $MYVIMRC<CR>
 
 " open netrw on the left, like nerdtree
-nnoremap - :24Lexplore<CR>
+"nnoremap - :24Lexplore<CR>
 
-nnoremap <C-p> :History<CR>
+nnoremap dgl :diffget LO<cr>
+nnoremap dgr :diffget RE<cr>
+nnoremap dgb :diffget BA<cr>
+
+nnoremap <C-p> :FZFMru<CR>
 
 " coc.nvim {{{
 
+nmap <silent> gp <Plug>(coc-diagnostic-prev)
+nmap <silent> gn <Plug>(coc-diagnostic-next)
+
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-nmap <silent> gn <Plug>(coc-diagnostic-prev)
-nmap <silent> gp <Plug>(coc-diagnostic-next)
-
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" }}}
+let g:coc_snippet_next = '<tab>'
 
 " }}}
 
@@ -226,11 +228,12 @@ vnoremap <leader>cz y:call NERDComment('x', "toggle")<CR>`>p
 
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<CR>
 nnoremap <leader>r :Rg<space>
-nnoremap <leader>R :Rg<space>'\b<C-r><C-w>\b'<CR>
+nnoremap <leader>R :Rg<space><C-r><C-w><CR>
 
 
 nnoremap <leader>f :GFiles<CR>
 nnoremap <leader>F :FZF<CR>
+
 
 " }}}
 
@@ -244,6 +247,14 @@ autocmd QuickFixCmdPost [^l]* nested cwindow
 
 autocmd FileType c   let b:vcm_tab_complete = "omni"
 autocmd FileType cpp let b:vcm_tab_complete = "omni"
+
+autocmd BufWritePre *.go call CocAction('runCommand', 'editor.action.organizeImport')
+
+augroup filetype_yaml
+    au!
+    au FileType yaml setlocal shiftwidth=2
+    au FileType yaml setlocal softtabstop=2
+augroup END
 
 " Vimscript file settings {{{
 
@@ -262,6 +273,6 @@ abbreviate todo: TODO(ktravis):
 abbreviate TODO: TODO(ktravis):
 abbreviate note: NOTE(ktravis):
 abbreviate NOTE: NOTE(ktravis):
-abbreviate xxx: NOTE(ktravis):
-abbreviate XXX: NOTE(ktravis):
+abbreviate xxx: XXX(ktravis):
+abbreviate XXX: XXX(ktravis):
 " }}}

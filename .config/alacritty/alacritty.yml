@@ -148,7 +148,7 @@ font:
     #style: Bold Italic
 
   # Point size
-  size: 12.0
+  size: 10.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
@@ -530,7 +530,9 @@ mouse:
 # binding with the same triggers is defined. To unset a default binding, it can
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
-#key_bindings:
+key_bindings:
+  - { key: U,  mods: Alt,   action: ScrollPageUp   }
+  - { key: D,  mods: Alt,   action: ScrollPageDown }
   # (Windows, Linux, and BSD only)
   #- { key: V,        mods: Control|Shift, action: Paste            }
   #- { key: C,        mods: Control|Shift, action: Copy             }

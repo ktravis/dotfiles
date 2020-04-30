@@ -6,18 +6,20 @@ export PATH=$HOME/bin:$PATH
 #xset +fp ${HOME}/.fonts
 #xset fp rehash
 
+xrdb "${HOME}/.Xresources"
+
+xsetroot -solid slategrey
 xsetroot -cursor_name left_ptr
 xset 180 120
 
-xrdb "${HOME}/.Xresources"
-
-setxkbmap -option ctrl:nocaps
+#setxkbmap -option ctrl:nocaps
 
 autorandr -c
 
 # General settings
 
-bspc monitor -d 1 2 3 4 5
+NUM_DESKTOPS=9
+bspc monitor -d $(seq -s ' ' $NUM_DESKTOPS)
 
 bspc config focus_follows_pointer true
 bspc config click_to_focus true
@@ -38,7 +40,7 @@ bspc config window_gap   6
 
 bspc config presel_feedback_color \#EEEEEE
 bspc config normal_border_color \#AAAAAA
-bspc config focused_border_color \#FF99A1
+bspc config focused_border_color \#ff4433
 
 bspc config single_monocle      true
 bspc config borderless_monocle  true
@@ -49,6 +51,7 @@ bspc config gapless_monocle     true
 bspc config external_rules_command "$(which rules)"
 
 bspc rule -a '*:floaty' state=floating
+bspc rule -a '*:motion_recorder' state=floating
 
 # UTILS
 
@@ -60,10 +63,9 @@ sxhkd_loop() {
     done
 }
 
-$HOME/.fehbg
 xss-lock -- sxlock &
 sxhkd_loop &
-compton &
+picom &
 dunst &
 battery-status-loop &
 

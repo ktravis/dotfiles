@@ -7,3 +7,4 @@
 .vim/.viminf*
 .vim/ctags
 .config/autorandr/*
+.config/systemd/user/multi-user.target.wants/

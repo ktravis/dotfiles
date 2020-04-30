@@ -1,9 +1,13 @@
 #!/bin/bash
 
 ID=$(xdpyinfo | grep focus | grep -oE '0x[0-9a-fA-F]+')
-PID=$(ps --ppid $(xprop -id $ID | grep -m 1 PID | cut -d " " -f 3) -o pid=)
-if [ -L "/proc/${PID# }/cwd" ]; then
-    alacritty --working-directory $(readlink /proc/${PID# }/cwd)
+CHILD_PID=$(xprop -id $ID | grep -m 1 PID | cut -d " " -f 3)
+PID=""
+if [ ! -z "$CHILD_PID" ]; then
+    PID=$(ps --ppid $CHILD_PID -o pid= | grep -oE '[0-9]+')
+fi
+if [ ! -z "$PID" ] && [ -L "/proc/$PID/cwd" ]; then
+    alacritty --working-directory $(readlink /proc/$PID/cwd)
 else
     alacritty
 fi

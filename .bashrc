@@ -65,7 +65,8 @@ fi
 
 # Environment variables
 export PATH=$HOME/bin:$PATH
-export GOPATH=$HOME
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$PATH
 export EDITOR=/usr/bin/vim
 
 if [ -f "$HOME/.bashrc.aliases" ]; then
@@ -77,7 +78,13 @@ if [ -f "$HOME/.bashrc.local" ]; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+FZF_CTRL_R_EDIT_KEY=ctrl-e
+FZF_CTRL_R_EXEC_KEY=enter
+source ~/.fzf-plugins/history-exec.bash
 
 ccd() {
     mkdir -p $1 && cd $1
+}
+gprune() {
+    git fetch -p && for branch in `git for-each-ref --format '%(refname) %(upstream:track)' refs/heads | awk '$2 == "[gone]" {sub("refs/heads/", "", $1); print $1}'`; do git branch -D $branch; done
 }

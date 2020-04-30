@@ -19,6 +19,7 @@ alias gs='git status -sb'
 alias gd='git diff'
 alias gc='git commit'
 alias gcm='git commit -m'
+alias gl='git log --graph --oneline'
 
 alias k='kubectl'
 alias kx='kubectx'
@@ -27,3 +28,4 @@ alias kn='kubens'
 complete -F _complete_alias k
 complete -F _complete_alias kx
 complete -F _complete_alias kn
+alias sus="systemctl suspend"

@@ -14,7 +14,7 @@ alt + shift + Return
     alacritty
 
 alt + space
-    rofi -show run >>~/logs/rofi.txt 2>&1
+    rofi -m -1 -show run >>~/logs/rofi.txt 2>&1
 
 alt + w
     rofi -m -1 -show window
@@ -69,11 +69,14 @@ alt + grave
 super + {h,j,k,l}
     resize {west,south,north,east}
 
-ctrl + alt + {1,2,3,4,5,6,7}
-    bspc desktop -f {1-7}
+ctrl + alt + {1,2,3,4,5,6,7,8,9}
+    bspc desktop -f {1,2,3,4,5,6,7,8,9}
 
-super + {_,shift} + {1,2,3,4,5,6,7}
-    bspc {desktop -f,node -d} {1-7}
+super + {_,shift} + {1,2,3,4,5,6,7,8,9}
+    bspc {desktop -f,node -d} {1,2,3,4,5,6,7,8,9}
 
-super + {f,t,F,p}
+super + {p,n}
+    bspc desktop -f {prev,next}.local
+
+super + {f,t,F,T}
     bspc node -t {~fullscreen,tiled,floating,pseudo_tiled}

@@ -1,11 +1,21 @@
 #!/bin/bash
 
+export PATH=$PATH:/usr/local/bin:/usr/bin
+export XAUTHORITY=$HOME/.Xauthority
+export DISPLAY=:0
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(whoami))/bus"
+
 pkgs=$(yay -Qu)
 [ -z "$pkgs" ] && exit 0
 
-case $(dunstify -r 2001 -t 0 -A a,"install" "$(echo "$pkgs" | wc -l) packages have updates" "$pkgs") in
+count=$(echo "$pkgs" | wc -l)
+if [ $count -gt 20 ]; then
+    pkgs="$(echo "$pkgs" | head -n 20)\n..."
+fi
+
+case $(dunstify -r 2001 -t 0 -A a,"install" "$count packages have updates" "$pkgs") in
     a)
-        alacritty --class floaty -e /bin/bash -c 'yay -Syu' &
+        alacritty --class floaty -e /bin/bash -c 'yay -Syu 2>&1 | tee ~/logs/updates-$(date +%y-%m-%d.%H-%M-%S).txt; read -p "( print enter )"'
         ;;
     *)
         echo naw

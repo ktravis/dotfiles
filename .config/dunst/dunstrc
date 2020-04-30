@@ -6,7 +6,8 @@
     sort = yes
     indicate_hidden = yes
     alignment = right
-    word_wrap = no
+    word_wrap = false
+    ellipsize = end
     geometry = "750x0-30+60"
     shrink = yes
     follow = none

@@ -4,4 +4,4 @@ export XAUTHORITY=$HOME/.Xauthority
 export DISPLAY=:0
 export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u $(whoami))/bus"
 
-notify-send.sh -r 1001 "$(amixer get Master | grep -q '\[off\]' && echo ♫ || echo x) $(amixer get Master | grep -oP '(?<=\[)[0-9]+(?=%\])' | progress-bar 20 -)"
+notify-send.sh -r 1001 "$(amixer get Master | grep -q '\[off\]' && echo x || echo ♫) $(amixer get Master | grep -oP '(?<=\[)[0-9]+(?=%\])' | progress-bar 20 -)"
