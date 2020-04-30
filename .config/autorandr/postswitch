@@ -13,3 +13,5 @@ for i in $(seq $NUM_DESKTOPS); do
     [ $d -lt ${#displays[@]} ] || d=$(( ${#displays[@]} - 1 ))
     bspc desktop $i -m ${displays[d]}
 done
+
+echo "DONE OK $(date)" >> $HOME/testing

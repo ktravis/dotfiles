@@ -67,6 +67,7 @@ xss-lock -- sxlock &
 sxhkd_loop &
 picom &
 dunst &
+autorandr-launcher --daemonize 2>&1 > $HOME/logs/autorandr.txt
 battery-status-loop &
 
 # vim: ft=sh
