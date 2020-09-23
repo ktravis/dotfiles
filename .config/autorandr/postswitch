@@ -2,16 +2,4 @@
 
 set -x
 
-NUM_DESKTOPS=9
-
-# TODO(ktravis): background is being weird, not sure about windows moving, but whatever
-
-displays=( $(echo $AUTORANDR_MONITORS | tr ':' ' ') )
-x=1
-for i in $(seq $NUM_DESKTOPS); do
-    d=$(((i-1) / 3))
-    [ $d -lt ${#displays[@]} ] || d=$(( ${#displays[@]} - 1 ))
-    bspc desktop $i -m ${displays[d]}
-done
-
-echo "DONE OK $(date)" >> $HOME/testing
+place-desktops

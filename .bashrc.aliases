@@ -16,10 +16,17 @@ alias l='ls -CF'
 
 alias g='git status -sb'
 alias gs='git status -sb'
+complete -F _complete_alias gs
 alias gd='git diff'
+complete -F _complete_alias gd
 alias gc='git commit'
+complete -F _complete_alias gc
 alias gcm='git commit -m'
+complete -F _complete_alias gcm
 alias gl='git log --graph --oneline'
+complete -F _complete_alias gl
+alias gcb='git checkout -b'
+complete -F _complete_alias gcb
 
 alias k='kubectl'
 alias kx='kubectx'

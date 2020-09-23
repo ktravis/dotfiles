@@ -1,8 +1,5 @@
 # SHORTCUTS
 
-XF86MonBrightness{Down,Up}
-    light -{U,A} 5 && notify-send.sh -r 1000 -t 750 "☀️ $(light | cut -d. -f1 | progress-bar 20 -)"
-
 XF86Audio{RaiseVolume,LowerVolume,Mute}
     amixer set Master {10%+,10%-,toggle} && volume-notify
 
@@ -16,61 +13,46 @@ alt + shift + Return
 alt + space
     rofi -m -1 -show run >>~/logs/rofi.txt 2>&1
 
-alt + w
-    rofi -m -1 -show window
-
-alt + shift + r
+super + shift + r
     pkill -USR1 -x sxhkd && notify-send.sh "sxhkd restarted"
 
 super + b
     chromium 2>/dev/null
 
-super + shift + l
-    sxlock
+super + shift + m
+    autorandr -c --force
 
-alt + t
-    time-notify
-
-alt + shift + t
-    notify-send.sh -r 1002 "$(date +'%A %l:%M %P\n%F')"
-
-alt + b
-    battery-notify
+super + shift + b
+    rofi-bluetooth
 
 # BSPWM
 
 alt + q
     bspc node -c
 
-alt + shift + q
+super + shift + q
     bspc quit
 
-alt + shift + {h,j,k,l}
-    bspc node -p {west,south,north,east}
-
-alt + Escape
-    bspc node -p cancel
-
-alt + r
+super + r
     bspc node @parent -R 90
+
+super + {h,j,k,l}
+    bspc node -f {west,south,north,east} #.local
 
 alt + {h,j,k,l}
     bspc node -f {west,south,north,east} #.local
 
+super + shift + {h,j,k,l}
+    resize {west,south,north,east}
+
 alt + control + {h,j,k,l}
     bspc node -s {west,south,north,east}
 
-alt + g
-	bspc node -s biggest.local || bspc node -s last.local
+super + g
+    bspc node -s biggest.local || bspc node -s last.local
 
-alt + grave
-	bspc desktop -f last.local
-
-super + {h,j,k,l}
-    resize {west,south,north,east}
-
-ctrl + alt + {1,2,3,4,5,6,7,8,9}
-    bspc desktop -f {1,2,3,4,5,6,7,8,9}
+super + grave
+    bspc desktop -f last.local
 
 super + {_,shift} + {1,2,3,4,5,6,7,8,9}
     bspc {desktop -f,node -d} {1,2,3,4,5,6,7,8,9}
@@ -80,3 +62,31 @@ super + {p,n}
 
 super + {f,t,F,T}
     bspc node -t {~fullscreen,tiled,floating,pseudo_tiled}
+
+
+# XF86MonBrightness{Down,Up}
+#     light -{U,A} 5 && notify-send.sh -r 1000 -t 750 "☀️ $(light | cut -d. -f1 | progress-bar 20 -)"
+#
+# alt + w
+#     rofi -m -1 -show window
+#
+# super + shift + l
+#     sxlock
+#
+# alt + t
+#     time-notify
+#
+# alt + shift + t
+#     notify-send.sh -r 1002 "$(date +'%A %l:%M %P\n%F')"
+#
+# alt + b
+#     battery-notify
+#
+# alt + shift + {h,j,k,l}
+#     bspc node -p {west,south,north,east}
+#
+# alt + Escape
+#     bspc node -p cancel
+#
+# ctrl + alt + {1,2,3,4,5,6,7,8,9}
+#     bspc desktop -f {1,2,3,4,5,6,7,8,9}

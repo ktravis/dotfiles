@@ -9,6 +9,12 @@ bspc query -N -n .\!automatic > /dev/null && \
 vert=south
 hori=east
 
+role="$(xprop -id "$1" WM_WINDOW_ROLE)"
+
+case "$role" in
+    *pop-up* ) echo "state=floating" && exit ;;
+esac
+
 x=$(bspc query -T -n focused | jq '.rectangle.width')
 y=$(bspc query -T -n focused | jq '.rectangle.height')
 

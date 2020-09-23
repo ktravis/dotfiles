@@ -2,48 +2,28 @@
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'benmills/vimux'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "Plug 'SirVer/ultisnips'
 Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'honza/vim-snippets'
-Plug 'scrooloose/nerdcommenter'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
-Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-commentary'
 Plug 'sjl/badwolf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'bcicen/vim-vice'
 Plug 'pbogut/fzf-mru.vim'
-"Plug 'ludovicchabant/vim-gutentags'
-"Plug 'prabirshrestha/async.vim'
-"Plug 'prabirshrestha/vim-lsp'
-
-"Plug 'ajh17/vimcompletesme'
+Plug 'nikolvs/vim-sunbather'
+Plug 'ajmwagar/vim-deus'
+Plug 'joshdick/onedark.vim'
 
 call plug#end()
-
-" LSP OmniComplete {{{
-
-"if executable('clangd')
-    "augroup lsp_clangd
-        "autocmd!
-        "autocmd User lsp_setup call lsp#register_server({
-                    "\ 'name': 'clangd',
-                    "\ 'cmd': {server_info->['clangd']},
-                    "\ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-                    "\ })
-        "autocmd FileType c setlocal omnifunc=lsp#complete
-        "autocmd FileType cpp setlocal omnifunc=lsp#complete
-        "autocmd FileType objc setlocal omnifunc=lsp#complete
-        "autocmd FileType objcpp setlocal omnifunc=lsp#complete
-    "augroup end
-"endif
-
-" }}}
 
 " }}}
 
@@ -51,14 +31,11 @@ call plug#end()
 
 syntax on
 
-let g:lightline = {}
-let g:lightline.colorscheme = 'darcula'
-
 set nu
 set nocompatible
 set wrap                " for long lines
 set textwidth=120       " #
-set formatoptions=qn1  " #
+set formatoptions=qn1   " #
 set formatoptions-=tca
 set scrolloff=3
 set hidden
@@ -84,7 +61,7 @@ set backupdir=$HOME/.vim/backup//
 
 set undofile
 set undodir=$HOME/.vim/undo//
-set undolevels=1000 "maximum number of changes that can be undone
+set undolevels=1000  "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 set magic
@@ -122,9 +99,13 @@ let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
 
 set t_Co=256
-set bg=dark
+set termguicolors
 
-colorscheme goodwolf
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+set background=dark    " Setting dark mode
+colorscheme onedark
 
 set guioptions-=m
 set guioptions-=T
@@ -133,7 +114,12 @@ set guioptions-=L
 set guifont=Inconsolata\ Bold\ 12
 
 hi link CocErrorFloat Normal
+hi Search ctermbg=228
 hi clear SignColumn
+hi Comment ctermfg=7 cterm=bold
+
+set grepprg=rg\ --vimgrep
+set grepformat=%f:%l:%c:%m
 
 " FZF Rg preview
 command! -bang -nargs=* Rg
@@ -187,14 +173,9 @@ nnoremap S i<CR><ESC>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
 
 nnoremap <silent> <F5> :source $MYVIMRC<CR>
 
-" open netrw on the left, like nerdtree
-"nnoremap - :24Lexplore<CR>
-
-nnoremap dgl :diffget LO<cr>
-nnoremap dgr :diffget RE<cr>
-nnoremap dgb :diffget BA<cr>
-
 nnoremap <C-p> :FZFMru<CR>
+
+" }}}
 
 " coc.nvim {{{
 
@@ -220,7 +201,6 @@ let g:coc_snippet_next = '<tab>'
 
 " reselect text that was just pasted
 nnoremap <leader>v V`]
-nnoremap <leader><space> :noh<cr>
 
 " Copy and comment line
 nnoremap <leader>cz yy:call NERDComment(0, "toggle")<CR>p
@@ -243,17 +223,35 @@ nnoremap <leader>F :FZF<CR>
 
 " Auto-command groups {{{
 
-autocmd QuickFixCmdPost [^l]* nested cwindow
+"autocmd QuickFixCmdPost [^l]* nested cwindow
 
 autocmd FileType c   let b:vcm_tab_complete = "omni"
 autocmd FileType cpp let b:vcm_tab_complete = "omni"
 
-autocmd BufWritePre *.go call CocAction('runCommand', 'editor.action.organizeImport')
+"autocmd BufWritePre *.go call CocAction('runCommand', 'editor.action.organizeImport')
 
 augroup filetype_yaml
     au!
     au FileType yaml setlocal shiftwidth=2
     au FileType yaml setlocal softtabstop=2
+augroup END
+
+augroup filetype_javascript
+    au!
+    au FileType javascript setlocal shiftwidth=2
+    au FileType javascript setlocal softtabstop=2
+augroup END
+
+augroup filetype_javascriptreact
+    au!
+    au FileType javascriptreact setlocal shiftwidth=2
+    au FileType javascriptreact setlocal softtabstop=2
+augroup END
+
+augroup init_quickfix
+  autocmd!
+  autocmd QuickFixCmdPost [^l]* cwindow
+  autocmd QuickFixCmdPost l* lwindow
 augroup END
 
 " Vimscript file settings {{{
@@ -276,3 +274,5 @@ abbreviate NOTE: NOTE(ktravis):
 abbreviate xxx: XXX(ktravis):
 abbreviate XXX: XXX(ktravis):
 " }}}
+
+command! -nargs=+ Grep execute 'silent grep! <args> | redr!'

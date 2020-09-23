@@ -8,18 +8,19 @@ export PATH=$HOME/bin:$PATH
 
 xrdb "${HOME}/.Xresources"
 
-xsetroot -solid slategrey
-xsetroot -cursor_name left_ptr
-xset 180 120
+hsetroot -solid slategrey
+hsetroot -cursor_name left_ptr
+xset dpms 180 120
 
 #setxkbmap -option ctrl:nocaps
 
-autorandr -c
+# autorandr -c
 
 # General settings
 
-NUM_DESKTOPS=9
-bspc monitor -d $(seq -s ' ' $NUM_DESKTOPS)
+
+bspc monitor eDP-1 -d 1 2 3
+bspc monitor DP-3 -d 4 5
 
 bspc config focus_follows_pointer true
 bspc config click_to_focus true
@@ -63,11 +64,11 @@ sxhkd_loop() {
     done
 }
 
-xss-lock -- sxlock &
+# xss-lock -- sxlock &
 sxhkd_loop &
-picom &
-dunst &
-autorandr-launcher --daemonize 2>&1 > $HOME/logs/autorandr.txt
-battery-status-loop &
+# picom &
+# dunst &
+# autorandr-launcher --daemonize 2>&1 > $HOME/logs/autorandr.txt
+# battery-status-loop &
 
 # vim: ft=sh

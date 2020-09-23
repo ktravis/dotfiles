@@ -3,7 +3,7 @@
 all_files = $(wildcard .bashrc*) .vim/ .vimrc .Xresources .hushlogin $(wildcard .config/*/) $(wildcard bin/*)
 targets = $(addprefix $(HOME)/,$(all_files))
 
-services=clock.timer updates.timer
+services=clock.timer updates.timer tada.service
 
 install: $(targets) services
 $(HOME)/%: %
