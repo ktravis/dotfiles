@@ -2,11 +2,9 @@
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'benmills/vimux'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-"Plug 'SirVer/ultisnips'
+Plug 'pbogut/fzf-mru.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'fatih/vim-go'
 Plug 'honza/vim-snippets'
@@ -18,9 +16,8 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'sjl/badwolf'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'pbogut/fzf-mru.vim'
-Plug 'nikolvs/vim-sunbather'
-Plug 'ajmwagar/vim-deus'
+" Plug 'nikolvs/vim-sunbather'
+" Plug 'ajmwagar/vim-deus'
 Plug 'joshdick/onedark.vim'
 
 call plug#end()
